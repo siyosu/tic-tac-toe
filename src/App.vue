@@ -1,5 +1,12 @@
+<script setup lang="ts">
+import TheBoard from './components/TheBoard.vue'
+</script>
 <template>
-  <main>
-    <h1 class="text-xl font-bold text-amber-500">Hello World</h1>
+  <main class="bg-slate-950 text-slate-100">
+    <div class="container">
+      <div class="flex min-h-screen items-center justify-center">
+        <TheBoard />
+      </div>
+    </div>
   </main>
 </template>

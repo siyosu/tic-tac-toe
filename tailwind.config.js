@@ -12,7 +12,17 @@ export default {
     fontFamily: {
       poppins: ['Poppins', 'sans-serif']
     },
-    extend: {}
+    extend: {
+      animation: {
+        zoomIn: 'scale .2s cubic-bezier(0, 0, 0.2, 1)'
+      },
+      keyframes: {
+        scale: {
+          from: { transform: 'scale(0)', opacity: 0 },
+          to: { transform: 'scale(1)', opacity: 1 }
+        }
+      }
+    }
   },
   plugins: []
 }
