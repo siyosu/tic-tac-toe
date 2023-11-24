@@ -1,26 +1,19 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { useGameStore } from '@/stores/game'
+import { storeToRefs } from 'pinia'
 import TheCircle from './TheCircle.vue'
+import TheResult from './TheResult.vue'
 import TheX from './TheX.vue'
 
-const player = ref<'x' | 'o'>('x')
-
-const addMove = (e: MouseEvent) => {
-  const element = e.target as HTMLElement
-  if (element.dataset.player) return
-
-  const block = Number(element.dataset.block)
-  if (isNaN(block)) return
-
-  element.dataset.player = player.value
-  player.value = player.value === 'x' ? 'o' : 'x'
-}
+const game = useGameStore()
+const { gameStatus } = storeToRefs(game)
 </script>
+
 <template>
   <div
-    class="aspect-square w-full max-w-lg rounded-[2rem] border border-slate-800 bg-slate-900 shadow-sm"
+    class="aspect-square w-full max-w-lg rounded-xl border border-slate-800 bg-slate-900 shadow-sm"
   >
-    <div class="flex h-full flex-wrap justify-center">
+    <div v-if="gameStatus.status === 'on-going'" class="flex h-full flex-wrap justify-center">
       <div
         v-for="i in 9"
         :key="i"
@@ -31,11 +24,12 @@ const addMove = (e: MouseEvent) => {
           'border-r-4': [7, 8].includes(i)
         }"
         :data-block="i"
-        @click="addMove"
+        @click="game.placeMove"
       >
         <TheX />
         <TheCircle />
       </div>
     </div>
+    <TheResult v-else />
   </div>
 </template>
